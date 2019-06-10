@@ -4,12 +4,20 @@
   "description": "A reddit-clone application for users to discuss and share content",
   "main": "src/server.js",
   "scripts": {
-    "test": "export NODE_ENV=test&& jasmine"
+    "test": "set NODE_ENV=test&& jasmine",
+    "start": "node src/server.js"
   },
   "keywords": [
     "reddit-clone",
     "practice"
   ],
   "author": "Matthew Reyes",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^3.0.0",
+    "request": "^2.83.0"
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  }
 }
