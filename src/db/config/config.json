@@ -20,8 +20,8 @@
   "production": {
     "username": "root",
     "password": "Red is the rose.",
-    "database": "database_production",
+    "database": "database-production",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   }
 }
