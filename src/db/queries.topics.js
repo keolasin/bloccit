@@ -11,6 +11,16 @@ module.exports = {
     })
   },
 
+  getTopic(id, callback){
+    return Topic.findById(id)
+    .then((topic) => {
+      callback(null, topic);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+  },
+
   addTopic(newTopic, callback){
     return Topic.create({
       title: newTopic.title,
