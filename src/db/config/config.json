@@ -19,9 +19,11 @@
   },
   "production": {
     "username": "root",
-    "password": "Red is the rose.",
+    "password": null,
     "database": "database-production",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "operatorsAliases": false,
+    "use_env_variable": "DATABASE_URL"
   }
 }
