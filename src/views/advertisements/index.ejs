@@ -10,15 +10,12 @@
       <h1>Advertisements</h1>
 
       <ul class="list-group">
-<!-- #1 -->
         <% advertisements.forEach((advertisement) => { %>
-<!-- #2 -->
           <li class="list-group-item">
             <a href="/advertisements/<%= advertisement.id %>"> <%= advertisement.title %> </a>
           </li>
         <% }) %>
       </ul>
-
     </main>
   </body>
 </html>
