@@ -62,6 +62,16 @@ describe("routes : flairs", () => {
     });
   });
 
+  describe("GET /topics/:topicId/posts/:postId/flairs/:id", () => {
+    it("should render a view with the selected flair", (done) => {
+      request.get(`${base}/${this.topic.id}/posts/${this.post.id}/flairs/${this.flair.id}`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain("Comics");
+        done();
+      });
+    });
+  });
+
   describe("POST /topics/:topicId/posts/:postId/flairs/create", () => {
    it("should create a new flair and redirect", (done) => {
       const options = {
@@ -78,7 +88,7 @@ describe("routes : flairs", () => {
             expect(flair).not.toBeNull();
             expect(flair.name).toBe("Villains");
             expect(flair.color).toBe("Black");
-            expect(post.topicId).not.toBeNull();
+            expect(flair.postId).not.toBeNull();
             done();
           })
           .catch((err) => {
@@ -88,6 +98,21 @@ describe("routes : flairs", () => {
         }
       );
     });
+ });
+
+ describe("POST /topics/:topicId/posts/:postId/flairs/:id/destroy", () => {
+   it("should delete the flair with the associated ID", (done) => {
+     expect(this.flair.id).toBe(1);
+
+     request.post(`${base}/${this.topic.id}/posts/${this.post.id}/flairs/${this.flair.id}/destroy`, (err, res, body) => {
+       Flair.findById(1)
+       .then((flair) => {
+         expect(err).toBeNull();
+         expect(flair).toBeNull();
+         done();
+       })
+     });
+   });
  });
 
 });
