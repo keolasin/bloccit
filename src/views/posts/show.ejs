@@ -8,10 +8,10 @@
 
     <main class="container">
       <h1><%= post.title %></h1>
+      <p><%= post.body %></p>
         <form style="display:initial" action="/topics/<%= post.topicId %>/posts/<%= post.id %>/destroy" method="post">
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>
-      <p><%= post.body %></p>
       <hr>
       <h1>Flairs</h1>
       <ul class="list-group">

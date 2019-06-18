@@ -12,6 +12,7 @@
       <form style="display:initial" action="/topics/:topicId/posts/<%= flair.postId %>/flairs/<%= flair.id %>/destroy" method="post">
         <button type="submit" class="btn btn-danger">Delete flair</button>
       </form>
+      <a href="/topics/:topicId/posts/<%= flair.postId %>/flairs/<%= flair.id %>/edit" class="btn btn-warning">Edit Flair</a>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>

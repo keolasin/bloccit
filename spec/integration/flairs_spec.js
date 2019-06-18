@@ -72,6 +72,17 @@ describe("routes : flairs", () => {
     });
   });
 
+  describe("GET /topics/:topicId/posts/:postId/flairs/:id/edit", () => {
+    it("should render a view with an edit flair form", (done) => {
+      request.get(`${base}/${this.topic.id}/posts/${this.post.id}/flairs/${this.flair.id}/edit`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain("Edit Flair");
+        expect(body).toContain("Comics");
+        done();
+      })
+    })
+  })
+
   describe("POST /topics/:topicId/posts/:postId/flairs/create", () => {
    it("should create a new flair and redirect", (done) => {
       const options = {
@@ -98,6 +109,41 @@ describe("routes : flairs", () => {
         }
       );
     });
+ });
+
+ describe("POST /topics/:topicId/posts/:postId/flairs/:id/update", () => {
+   it("should return a status code of 302", (done) => {
+     request.post({
+       url: `${base}/${this.topic.id}/posts/${this.post.id}/flairs/${this.flair.id}/update`,
+       form: {
+         name: 'Animals',
+         color: 'Yellow'
+       }
+     }, (err, res, body) => {
+       expect(res.statusCode).toBe(302);
+       done();
+     });
+   });
+
+   it("should update the flair with the given values", (done) => {
+     const options = {
+       url: `${base}/${this.topic.id}/posts/${this.post.id}/flairs/${this.flair.id}/update`,
+       form: {
+         name: 'Animals'
+       }
+     };
+     request.post(options,
+      (err, res, body) => {
+        expect(err).toBeNull();
+        Flair.findOne({
+          where: {id: this.flair.id}
+        })
+        .then((flair) => {
+          expect(flair.name).toBe("Animals");
+          done();
+        });
+      });
+   });
  });
 
  describe("POST /topics/:topicId/posts/:postId/flairs/:id/destroy", () => {
