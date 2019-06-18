@@ -22,6 +22,25 @@ module.exports = {
     })
   },
 
+  updatePost(id, updatedPost, callback){
+     return Post.findById(id)
+     .then((post) => {
+       if(!post){
+         return callback("Post not found");
+       }
+
+       post.update(updatedPost, {
+         fields: Object.keys(updatedPost)
+       })
+       .then(() => {
+         callback(null, post);
+       })
+       .catch((err) => {
+         callback(err);
+       });
+     });
+   },
+
   deletePost(id, callback){
     return Post.destroy({
       where: { id }
