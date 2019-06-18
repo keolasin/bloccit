@@ -15,14 +15,15 @@
       <hr>
       <h1>Flairs</h1>
       <ul class="list-group">
-        <% topic.posts.falirs.forEach((post) => { %>
+        <% post.flairs.forEach((flair) => { %>
           <li class="list-group-item">
-            <a href="/topics/<% = topic.id %>/posts/<%= post.id %>/flairs/<%= flair.id %>"> <%= flair.name %> </a>
+            <a href="/topics/:topicId/posts/<%= post.id %>/flairs/<%= flair.id %>"> <%= flair.name %> </a>
           </li>
         <% }) %>
       </ul>
 
       <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/edit" class="btn btn-warning">Edit</a>
+      <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/flairs/new" class="btn btn-success">New Flair</a>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
