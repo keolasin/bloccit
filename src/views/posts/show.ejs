@@ -12,6 +12,16 @@
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>
       <p><%= post.body %></p>
+      <hr>
+      <h1>Flairs</h1>
+      <ul class="list-group">
+        <% topic.posts.falirs.forEach((post) => { %>
+          <li class="list-group-item">
+            <a href="/topics/<% = topic.id %>/posts/<%= post.id %>/flairs/<%= flair.id %>"> <%= flair.name %> </a>
+          </li>
+        <% }) %>
+      </ul>
+
       <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/edit" class="btn btn-warning">Edit</a>
     </main>
 
