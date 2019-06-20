@@ -37,7 +37,7 @@ module.exports = {
 
     // takes the user.id stored in the session and returns user associated with it
     passport.deserializeUser((id, callback) => {
-      User.findByPk(id)
+      User.findById(id)
       .then((user) => {
         callback(null, user);
       })
