@@ -7,8 +7,12 @@
     <% include ../static/partials/navbar.ejs %>
 
     <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+
       <h1><%= topic.title %></h1>
       <p><%= topic.description %></p>
+      <a href="/topics/<%= topic.id %>/edit" class="btn btn-warning">Edit Topic</a>
       <hr>
       <h1>Posts</h1>
 
@@ -20,7 +24,6 @@
         <% }) %>
       </ul>
 
-      <a href="/topics/<%= topic.id %>/edit" class="btn btn-warning">Edit</a>
       <a href="/topics/<%= topic.id %>/posts/new" class="btn btn-success">New Post</a>
 
       <form style="display:initial" action="/topics/<%= topic.id %>/destroy" method="post">

@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const validation = require("./validation");
 
 const postController = require("../controllers/postController");
-const validation = require("./validation");
 
 router.get("/topics/:topicId/posts/new", postController.new);
 router.get("/topics/:topicId/posts/:id", postController.show);

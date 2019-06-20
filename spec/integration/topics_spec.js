@@ -93,6 +93,29 @@ describe("routes : topics", () => {
         }
       );
     });
+
+    it("should not create a new topic that fails validations", (done) => {
+      const options = {
+        url: `${base}create`,
+        form: {
+          title: "12",
+          description: "ab"
+        }
+      };
+
+      request.post(options,
+      (err, res, body) => {
+        Topic.findOne({where: {title: "12"}})
+        .then((topic) => {
+          expect(topic).toBeNull();
+          done();
+        })
+        .catch((err) => {
+          console.log(err);
+          done();
+        });
+      });
+    });
   });
 
   describe("POST /topics/:id/destroy", () => {
