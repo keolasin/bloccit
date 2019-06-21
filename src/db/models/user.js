@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     role: {
-     type: DataTypes.STRING,
-     allowNull: false,
-     defaultValue: "member"
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "member"
    }
   }, {});
   User.associate = function(models) {

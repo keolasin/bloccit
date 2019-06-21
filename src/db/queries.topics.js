@@ -70,7 +70,7 @@ module.exports = {
    updateTopic(req, updatedTopic, callback){
 
      // search for a topic matching the id passed in the req.params
-      return Topic.findByPk(req.params.id)
+      return Topic.findById(req.params.id)
       .then((topic) => {
 
         //if not found, return error notice

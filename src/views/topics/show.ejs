@@ -8,9 +8,8 @@
 
     <main class="container">
       <h1><%= topic.title %></h1>
-
-
       <p><%= topic.description %></p>
+
       <hr>
       <h1>Posts</h1>
 
@@ -22,10 +21,11 @@
         <% }) %>
       </ul>
 
-      <a href="/topics/<%= topic.id %>/edit" class="btn btn-warning">Edit</a>
+
       <% if(currentUser) { %>
         <a href="/topics/<%= topic.id %>/posts/new" class="btn btn-success">New Post</a>
         <% if(currentUser.isAdmin()) { %>
+          <a href="/topics/<%= topic.id %>/edit" class="btn btn-warning">Edit</a>
           <form style="display:initial" action="/topics/<%= topic.id %>/destroy" method="post">
             <button type="submit" class="btn btn-danger">Delete</button>
           </form>
