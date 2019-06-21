@@ -10,8 +10,10 @@ describe("Post", () => {
      this.post;
      this.user;
 
+     // start with clean database
      sequelize.sync({force: true}).then((res) => {
 
+       // create user
        User.create({
          email: "starman@tesla.com",
          password: "Trekkie4lyfe"
@@ -19,15 +21,18 @@ describe("Post", () => {
        .then((user) => {
          this.user = user; //store the user
 
+         // create a topic
          Topic.create({
            title: "Expeditions to Alpha Centauri",
            description: "A compilation of reports from recent visits to the star system.",
+           // create a post associated to the topic
            posts: [{
              title: "My first visit to Proxima Centauri b",
              body: "I saw some rocks.",
              userId: this.user.id
            }]
          }, {
+           // created post is associated to its parent topic
            include: {
              model: Post,
              as: "posts"
@@ -124,7 +129,7 @@ describe("Post", () => {
      });
    });
 
-   //get/set for users
+   // get/set for users
    describe("#setUser()", () => {
 
      it("should associate a post and a user together", (done) => {

@@ -1,5 +1,6 @@
 const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
+const Post = require("../../src/db/models").Post;
 const User = require("../../src/db/models").User;
 
 describe("Topic", () => {
@@ -9,6 +10,7 @@ describe("Topic", () => {
      this.post;
      this.user;
 
+     // start with empty database
      sequelize.sync({force: true}).then((res) => {
 
        // create user object
@@ -32,7 +34,7 @@ describe("Topic", () => {
            }]
          }, {
 
-          // tells us to store the associated post via the Post model as 'posts'
+          // include tells us to store the associated post via the Post model as 'posts'
            include: {
              model: Post,
              as: "posts"
@@ -53,7 +55,7 @@ describe("Topic", () => {
 
       Topic.create({
         title: "Rock climbing",
-        body: "All things related to rock climbing",
+        description: "All things related to rock climbing",
       })
       .then((topic) => {
         expect(topic.title).toBe("Rock climbing");
@@ -86,7 +88,7 @@ describe("Topic", () => {
       this.topic.getPosts()
       .then((associatedPosts) => {
         expect(associatedPosts.length).toBe(1);
-        expect(associatedPosts[0].title).toBe("Fire-breathing");
+        expect(associatedPosts[0].title).toBe("My first visit to Proxima Centauri b");
         done();
       });
     });
