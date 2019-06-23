@@ -27,7 +27,7 @@ module.exports = {
         if(err){
           res.redirect(500, "/posts/new");
         } else {
-          res.redirect(303, `/${post.id}`);
+          res.redirect(303, `/topics/${newPost.topicId}/posts/${post.id}`);
         }
       });
     } else {
@@ -65,9 +65,9 @@ module.exports = {
   update(req, res, next){
      postQueries.updatePost(req, req.body, (err, post) => {
        if(err || post == null){
-         res.redirect(404, `/topics/${req.params.topicId}/posts/${req.params.id}/edit`);
+         res.redirect(401, `/topics/${req.params.topicId}/posts/${req.params.id}/edit`);
        } else {
-         res.redirect(`/topics/${req.params.topicId}/posts/${req.params.id}`);
+         res.redirect(`/topics/${req.params.id}`);
        }
      });
    },
@@ -77,7 +77,7 @@ module.exports = {
       if(err){
         res.redirect(500, `/topics/${req.params.topicId}/posts/${req.params.id}`);
       } else {
-        res.redirect(303, `/topics/${req.params.topicId}`);
+        res.redirect(303, `/topics`);
       }
     });
   }

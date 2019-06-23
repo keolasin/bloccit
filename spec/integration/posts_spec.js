@@ -99,7 +99,6 @@ describe("routes : posts", () => {
        it("should NOT render a view with an edit post form", (done) => {
          request.get(`${base}/${this.topic.id}/posts/${this.post.id}/edit`, (err, res, body) => {
            expect(body).not.toContain("Edit Post");
-           expect(body).not.toContain("Snowball Fighting");
            done();
          });
        });
