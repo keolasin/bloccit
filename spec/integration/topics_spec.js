@@ -201,7 +201,7 @@ describe("routes : topics", () => {
      });
 
      describe("GET /topics", () => {
-     it("should return a status code 200 and all topics", (done) => {
+       it("should return a status code 200 and all topics", (done) => {
        request.get(base, (err, res, body) => {
          expect(res.statusCode).toBe(200);
          expect(err).toBeNull();
@@ -211,16 +211,16 @@ describe("routes : topics", () => {
        });
      });
    });
-     describe("GET /topics/new", () => {
-     it("should render a new topic form", (done) => {
+    describe("GET /topics/new", () => {
+      it("should redirect to topics view", (done) => {
        request.get(`${base}new`, (err, res, body) => {
          expect(err).toBeNull();
-         expect(body).toContain("New Topic");
+         expect(body).toContain("Topics");
          done();
        });
-     });
-   });
-     describe("GET /topics/:id", () => {
+      });
+    });
+    describe("GET /topics/:id", () => {
      it("should render a view with the selected topic", (done) => {
        request.get(`${base}${this.topic.id}`, (err, res, body) => {
          expect(err).toBeNull();
@@ -229,11 +229,11 @@ describe("routes : topics", () => {
        });
      });
    });
-     describe("GET /topics/:id/edit", () => {
-     it("should render a view with an edit topic form", (done) => {
+    describe("GET /topics/:id/edit", () => {
+     it("should NOT render a view with an edit topic form", (done) => {
        request.get(`${base}${this.topic.id}/edit`, (err, res, body) => {
          expect(err).toBeNull();
-         expect(body).toContain("Edit Topic");
+         expect(body).not.toContain("Edit Topic");
          expect(body).toContain("JS Frameworks");
          done();
        });
@@ -242,7 +242,7 @@ describe("routes : topics", () => {
 
 
      // POST tests
-     describe("POST /topics/create", () => {
+    describe("POST /topics/create", () => {
      const options = {
        url: `${base}create`,
        form: {
@@ -251,14 +251,12 @@ describe("routes : topics", () => {
        }
      };
 
-     it("should create a new topic and redirect", (done) => {
+     it("should NOT create a new topic", (done) => {
        request.post(options,
          (err, res, body) => {
            Topic.findOne({where: {title: "blink-182 songs"}})
            .then((topic) => {
-             expect(res.statusCode).toBe(303);
-             expect(topic.title).toBe("blink-182 songs");
-             expect(topic.description).toBe("What's your favorite blink-182 song?");
+             expect(topic).toBeNull();
              done();
            })
            .catch((err) => {
@@ -269,8 +267,8 @@ describe("routes : topics", () => {
        );
      });
    });
-     describe("POST /topics/:id/destroy", () => {
-     it("should delete the topic with the associated ID", (done) => {
+    describe("POST /topics/:id/destroy", () => {
+     it("should NOT delete the topic with the associated ID", (done) => {
        Topic.all()
        .then((topics) => {
 
@@ -280,16 +278,15 @@ describe("routes : topics", () => {
          request.post(`${base}${this.topic.id}/destroy`, (err, res, body) => {
            Topic.all()
            .then((topics) => {
-             expect(err).toBeNull();
-             expect(topics.length).toBe(topicCountBeforeDelete - 1);
+             expect(topics.length).toBe(topicCountBeforeDelete);
              done();
            })
          });
        });
      });
    });
-     describe("POST /topics/:id/update", () => {
-     it("should update the topic with the given values", (done) => {
+    describe("POST /topics/:id/update", () => {
+     it("should NOT update the topic with the given values", (done) => {
        const options = {
          url: `${base}${this.topic.id}/update`,
          form: {
@@ -305,7 +302,7 @@ describe("routes : topics", () => {
              where: { id: this.topic.id }
            })
            .then((topic) => {
-             expect(topic.title).toBe("Javascript Frameworks");
+             expect(topic.title).toBe("JS Frameworks");
              done();
            });
          });
