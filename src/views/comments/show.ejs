@@ -1,0 +1,24 @@
+
+<!-- check for comments -->
+<% if(comment) { %>
+  <div style="width: 50%">
+    <hr>
+    <p>
+      <%= comment.body %>
+    </p>
+    <small class="card-subtitle mb-2 text-muted">
+      <!-- eager load comments -->
+      sent by <%= comment.User.email %> on <%= comment.createdAt %>
+    </small>
+
+    <!-- only display delete button if the user signed is in is the owner or admin -->
+    <% if(currentUser && (currentUser.id === comment.userId || currentUser.isAdmin())) { %>
+      <form style="display:initial"
+            action="/topics/<%= post.topicId %>/posts/<%= post.id %>/comments/<%= comment.id %>/destroy"
+            method="post">
+        <button type="submit" class="btn btn btn-sm btn-outline-danger">Delete</button>
+      </form>
+    <% } %>
+    <hr>
+  </div>
+<% } %>
