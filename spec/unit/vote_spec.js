@@ -135,6 +135,23 @@ describe("Vote", () => {
       })
     });
 
+    // vote value check
+    it("should not create a vote with a value other than 1 or -1", (done) => {
+      Vote.create({
+        value: 2,
+        userId: this.user.id,
+        postId: this.post.id
+      })
+      .then((vote) => {
+        // validation error, will be skipped.
+        done();
+      })
+      .catch((err) => {
+        expect(err.message).toContain("Vote value cannot be anything other than 1 or -1");
+        done();
+      });
+    });
+
   });
 
   // setUser()
@@ -252,6 +269,70 @@ describe("Vote", () => {
         .then((associatedPost) => {
           expect(associatedPost.title).toBe("My first visit to Proxima Centauri b");
           done();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        done();
+      });
+    });
+  });
+
+  // getPoints()
+  describe("#getPoints()", () => {
+    it("should return the sum of all the votes on an associated post", (done) => {
+      Vote.create({
+        value: 1,
+        userId: this.user.id,
+        postId: this.post.id
+      })
+      .then((vote) => {
+        let totalPoints = this.post.getPoints();
+        expect(totalPoints).toBe(1);
+        done();
+      })
+      .catch((err) => {
+        console.log(err);
+        done();
+      });
+    });
+  });
+
+  // hasUpvoteFor()
+  describe("#hasUpvoteFor()", () => {
+    it("should return true if the user with the matching userId has an upvote for a post", (done) => {
+      Vote.create({
+        value: 1,
+        userId: this.user.id,
+        postId: this.post.id
+      })
+      .then((vote) => {
+        vote.postId.hasUpvoteFor()
+        .then((associatedPost) => {
+            expect(this.votes).toBe(true);
+            done();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        done();
+      });
+    });
+  });
+
+  // hasDownvoteFor()
+  describe("#hasDownvoteFor()", () => {
+    it("should return true if the user with the matching userId has a downvote for a post", (done) => {
+      Vote.create({
+        value: -1,
+        userId: this.user.id,
+        postId: this.post.id
+      })
+      .then((vote) => {
+        vote.postId.hasDownvoteFor()
+        .then((associatedPost) => {
+            expect(this.votes).toBe(true);
+            done();
         });
       })
       .catch((err) => {
