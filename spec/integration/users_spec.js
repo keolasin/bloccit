@@ -152,10 +152,11 @@ describe("routes : users", () => {
      });
 
      // request to profile page
-     it("should present a list of comments and posts a user has created", (done) => {
+     it("should present a list of comments, posts, and favorites a user has created", (done) => {
        request.get(`${base}${this.user.id}`, (err, res, body) => {
          expect(body).toContain("Snowball Fighting");
          expect(body).toContain("This comment is alright.");
+         expect(body).toContain("Favorite posts");
          done();
        });
      });
