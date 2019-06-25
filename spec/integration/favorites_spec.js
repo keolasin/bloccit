@@ -1,7 +1,6 @@
 const request = require("request");
 const server = require("../../src/server");
 const base = "http://localhost:3000/topics/";
-
 const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
 const Post = require("../../src/db/models").Post;
@@ -10,13 +9,10 @@ const Favorite = require("../../src/db/models").Favorite;
 
 describe("routes : favorites", () => {
   beforeEach(done => {
-
-    // store user, topic, post for testing
     this.user;
     this.topic;
     this.post;
 
-    // clear the database and create the above objects
     sequelize.sync({ force: true }).then(res => {
       User.create({
         email: "starman@tesla.com",
@@ -28,7 +24,7 @@ describe("routes : favorites", () => {
           {
             title: "Expeditions to Alpha Centauri",
             description:
-            "A compilation of reports from recent visits to the star system.",
+              "A compilation of reports from recent visits to the star system.",
             posts: [
               {
                 title: "My first visit to Proxima Centauri b",
@@ -44,15 +40,15 @@ describe("routes : favorites", () => {
             }
           }
         )
-        .then(res => {
-          this.topic = res;
-          this.post = this.topic.posts[0];
-          done();
-        })
-        .catch(err => {
-          console.log(err);
-          done();
-        });
+          .then(res => {
+            this.topic = res;
+            this.post = this.topic.posts[0];
+            done();
+          })
+          .catch(err => {
+            console.log(err);
+            done();
+          });
       });
     });
   });
@@ -85,16 +81,14 @@ describe("routes : favorites", () => {
 
           request.post(options, (err, res, body) => {
             Favorite.findAll()
-            .then(favorite => {
-              expect(favCountBeforeCreate).toBe(
-                favorite.length
-              );
-              done();
-            })
-            .catch(err => {
-              console.log(err);
-              done();
-            });
+              .then(favorite => {
+                expect(favCountBeforeCreate).toBe(favorite.length);
+                done();
+              })
+              .catch(err => {
+                console.log(err);
+                done();
+              });
           });
         });
       });
@@ -131,16 +125,16 @@ describe("routes : favorites", () => {
               postId: this.post.id
             }
           })
-          .then(favorite => {
-            expect(favorite).not.toBeNull();
-            expect(favorite.userId).toBe(this.user.id);
-            expect(favorite.postId).toBe(this.post.id);
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-          });
+            .then(favorite => {
+              expect(favorite).not.toBeNull();
+              expect(favorite.userId).toBe(this.user.id);
+              expect(favorite.postId).toBe(this.post.id);
+              done();
+            })
+            .catch(err => {
+              console.log(err);
+              done();
+            });
         });
       });
     });
@@ -159,7 +153,9 @@ describe("routes : favorites", () => {
             favCountBeforeDelete = favorites.length;
 
             request.post(
-              `${base}${this.topic.id}/posts/${this.post.id}/favorites/${favorite.id}/destroy`,
+              `${base}${this.topic.id}/posts/${this.post.id}/favorites/${
+                favorite.id
+              }/destroy`,
               (err, res, body) => {
                 this.post.getFavorites().then(favorites => {
                   expect(favorites.length).toBe(favCountBeforeDelete - 1);
