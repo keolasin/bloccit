@@ -1,6 +1,9 @@
 // require User model and bcrypt library
 const User = require("./models").User;
+const Post = require("./models").Post;
+const Comment = require("./models").Comment;
 const bcrypt = require("bcryptjs");
+
 
 module.exports = {
   // method to handle user creation
@@ -20,6 +23,34 @@ module.exports = {
     })
     .catch((err) => {
       callback(err);
+    })
+  },
+
+  getUser(id, callback){
+    // define result object that we will return
+    let result = {};
+    // find user
+    User.findById(id)
+    .then((user) => {
+      if(!user) { // if no user found, give 404 error
+        callback(404);
+      } else {
+        result["user"] = user; // store user as user property for result object
+
+        Post.scope({method: ["lastFiveFor", id]}).findAll() //find last five posts for posts using scope
+        .then((posts) => {
+          result["posts"] = posts; // store in the result object
+
+          Comment.scope({method: ["lastFiveFor", id]}).findAll() //find last five comments for posts using scope
+          .then((comments) => {
+            result["comments"] = comments; // store in the result object
+            callback(null, result);
+          })
+          .catch((err) => {
+            callback(err);
+          })
+        })
+      }
     })
   }
 

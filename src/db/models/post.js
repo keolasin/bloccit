@@ -67,5 +67,17 @@ module.exports = (sequelize, DataTypes) => {
       .map((v) => { return v.value })
       .reduce((prev, next) => { return prev + next });
    };
+
+   //first arg is scope name, second is a callback fxn or object with query
+   Post.addScope("lastFiveFor", (userId) => {
+     // pass in variable userId
+     return {
+       // set limit, order, and find based on variable userId
+       where: { userId: userId },
+       limit: 5,
+       order: [["createdAt", "DESC"]]
+     }
+   });
+
   return Post;
 };
