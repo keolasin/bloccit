@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
    });
   };
 
-  Post.getPoints = function(){
+  Post.prototype.getPoints = function(){
     if(this.votes.length === 0){
       return 0;
     } else {
@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
     };
   }
 
-  Post.hasUpvoteFor = function(userId){
+  Post.prototype.hasUpvoteFor = function(userId){
     let hasUpvote = false;
     this.votes.find(vote => {
       if(vote.userId === userId && vote.value === 1){
@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
     });
   }
 
-  Post.hasDownvoteFor = function(userId){
+  Post.prototype.hasDownvoteFor = function(userId){
     let hasDownvote = false;
     this.votes.find(vote => {
       if(vote.userId === userId && vote.value === -1){
