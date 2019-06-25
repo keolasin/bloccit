@@ -1,0 +1,13 @@
+<!-- call our getFavoriteFor method to check if the currentUser has favorited the post -->
+<% const favorite = post.getFavoriteFor(currentUser.id) %>
+<% if (favorite) { %>
+  <!-- if they have, show the unfavorite form button -->
+  <form style="display: initial;" action="/topics/<%= post.topicId %>/posts/<%= post.id %>/favorites/<%= favorite.id %>/destroy" method="post">
+    <button type="submit" class="btn btn-danger">Unfavorite</button>
+  </form>
+<% } else { %>
+ <!-- if not favorited, show the favorite button -->
+  <form style="display: initial;" action="/topics/<%= post.topicId %>/posts/<%= post.id %>/favorites/create" method="post">
+    <button type="submit" class="btn btn-primary">Favorite</button>
+  </form>
+<% } %>
