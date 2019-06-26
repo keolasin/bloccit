@@ -44,7 +44,12 @@ module.exports = {
           Comment.scope({method: ["lastFiveFor", id]}).findAll() //find last five comments for posts using scope
           .then((comments) => {
             result["comments"] = comments; // store in the result object
-            callback(null, result);
+
+            Favorite.scope({method: ["favoritePostsFor", id]}).findAll() // find all favorited posts
+            .then((favorites) => {
+              result["favorites"] = favorites;
+              callback(null, result);
+            })
           })
           .catch((err) => {
             callback(err);

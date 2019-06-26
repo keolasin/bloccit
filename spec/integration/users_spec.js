@@ -108,7 +108,7 @@ describe("routes : users", () => {
 
    });
 
-   describe("GET /users/:id", () => {
+  describe("GET /users/:id", () => {
      beforeEach((done) => {
        this.user;
        this.post;
@@ -156,7 +156,7 @@ describe("routes : users", () => {
        request.get(`${base}${this.user.id}`, (err, res, body) => {
          expect(body).toContain("Snowball Fighting");
          expect(body).toContain("This comment is alright.");
-         expect(body).toContain("Favorite posts");
+         expect(body).toContain("Favorited post:");
          done();
        });
      });

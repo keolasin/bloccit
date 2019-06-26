@@ -42,11 +42,13 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     User.addScope("favoritePostsFor", (userId) => {
-      include: [{
-        model: models.Favorite
-      }],
-      where: { userId: userId },
-      order: [["createdAt", "DESC"]]
+      return {
+        include: [{
+          model: models.Favorite,
+        }],
+        where: { userId: userId },
+        order: [["createdAt", "DESC"]]
+      }
     });
   };
 
