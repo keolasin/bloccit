@@ -86,8 +86,12 @@ describe("routes : posts", () => {
           body: "Without a doubt my favorite thing to do besides watching paint dry!"
         }
       };
+
+      console.log(`request.post about to be called`);
       request.post(options,
         (err, res, body) => {
+
+          console.log(`request post called, in callback function`);
           Post.findOne({where: {title: "Watching snow melt"}})
           .then((post) => {
             expect(post).not.toBeNull();
