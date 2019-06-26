@@ -13,7 +13,7 @@ describe("routes : comments", () => {
 
   beforeEach((done) => {
 
-    // create new user, alt user, topic, post, comment before each test
+    // create new user, topic, post, comment before each test
     this.user;
     this.topic;
     this.post;
