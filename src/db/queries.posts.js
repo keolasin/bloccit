@@ -6,14 +6,11 @@ const User = require("./models").User;
 module.exports = {
   addPost(newPost, callback){
 
-    console.log(`postQueries.addPost called`);
-
     return Post.create(newPost)
     .then((post) => {
       callback(null, post);
     })
     .catch((err) => {
-      console.log(`error caught in postQueries.addPost, problem with Post.create`);
       callback(err);
     })
   },

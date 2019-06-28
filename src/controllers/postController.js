@@ -13,14 +13,10 @@ module.exports = {
       userId: req.user.id
     };
 
-    console.log(`postController create() called`)
     postQueries.addPost(newPost, (err, post) => {
-      console.log(`postQueries.addPost() callback called`)
       if(err){
         res.redirect(500, "/posts/new");
-        console.log(`error hit: ${err}`);
       } else {
-        console.log(`success`);
         res.redirect(303, `/topics/${newPost.topicId}/posts/${post.id}`);
       }
     });

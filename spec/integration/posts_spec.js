@@ -83,15 +83,13 @@ describe("routes : posts", () => {
         url: `${base}/${this.topic.id}/posts/create`,
         form: {
           title: "Watching snow melt",
-          body: "Without a doubt my favorite thing to do besides watching paint dry!"
+          body: "Without a doubt my favorite thing to do besides watching paint dry!",
+          userId: this.user.id
         }
       };
 
-      console.log(`request.post about to be called`);
       request.post(options,
         (err, res, body) => {
-
-          console.log(`request post called, in callback function`);
           Post.findOne({where: {title: "Watching snow melt"}})
           .then((post) => {
             expect(post).not.toBeNull();
