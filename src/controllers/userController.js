@@ -58,8 +58,8 @@ module.exports = {
      userQueries.getUser(req.params.id, (err, result) => {
 
        // if error or user doesn't exist, flash notice
-       if(err || result.user === undefined){
-         req.flash("notice", "No user found with that ID.");
+       if(err){
+         req.flash("error", err);
          res.redirect("/");
        } else {
          // else render the view and pass in the unpacked object
